@@ -6,7 +6,8 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("Please enter an equation: ");
+            var userInput = Console.ReadLine();
         }
     }
 }
