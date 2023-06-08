@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace Calculator
 {
     public class Validator
     {
-        private List<char> operators = new List<char>{'+', '-', '*', ':', '^', '(', ')', };
+        private List<char> operators = new List<char>{'+', '-', '*', ':', '^'};
+        private List<char> openParentheses = new List<char>{'(', '{', '['};
+        private List<char> closeParentheses = new List<char>{')', '}', ']'};
+
 
         public bool IsValid(string equation)
         {
-            return (IsNotNull(equation) && IsNotDoubleParentheses(equation));
+            return (IsNotNull(equation) && IsDoubleParentheses(equation));
         }
 
         public bool IsNotNull(string equation)
@@ -18,7 +22,7 @@ namespace Calculator
             return !string.IsNullOrWhiteSpace(equation);
         }
 
-        public bool IsNotDoubleOperators(string equation)
+        public bool IsDoubleOperators(string equation)
         {
             for (int i = 0; i < operators.Count - 1; i++)
             {
@@ -31,10 +35,26 @@ namespace Calculator
             return true;
         }
 
-        public bool IsNotDoubleParentheses(string equation)
+        public bool IsDoubleParentheses(string equation)
         {
-            
+            int counter = 0;
+
+            foreach (char component in equation)
+            {
+                if (openParentheses.Contains(component))
+                {
+                    counter++;
+                }
+                if (closeParentheses.Contains(component))
+                {
+                    counter--;
+                }
+            }
+
+            return (counter != 0);
         }
+
+        
     }
 
 }
