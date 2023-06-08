@@ -7,9 +7,9 @@ namespace Calculator
 {
     public class Validator
     {
-        private List<char> operators = new List<char>{'+', '-', '*', ':', '^'};
-        private List<char> openParentheses = new List<char>{'(', '{', '['};
-        private List<char> closeParentheses = new List<char>{')', '}', ']'};
+        private List<char> operators = new List<char> {'+', '-', '*', ':', '^'};
+        private List<char> openParentheses = new List<char> {'(', '{', '['};
+        private List<char> closeParentheses = new List<char> {')', '}', ']'};
 
 
         public bool IsValid(string equation)
@@ -45,6 +45,7 @@ namespace Calculator
                 {
                     counter++;
                 }
+
                 if (closeParentheses.Contains(component))
                 {
                     counter--;
@@ -54,7 +55,13 @@ namespace Calculator
             return (counter != 0);
         }
 
+        public bool BeginsWithMinus(string equation)
+        {
+            return (equation[0] == '-');
+        }
         
-    }
 
+
+
+    }
 }
