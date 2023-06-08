@@ -8,6 +8,9 @@ namespace Calculator
         {
             Console.WriteLine("Please enter an equation: ");
             var userInput = Console.ReadLine();
+            Validator validator = new Validator(userInput);
+            validator.IsValid();
+            
         }
     }
 }
