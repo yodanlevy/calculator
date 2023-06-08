@@ -14,7 +14,10 @@ namespace Calculator
 
         public bool IsValid(string equation)
         {
-            return (IsNotNull(equation) && IsDoubleParentheses(equation));
+            return (IsNotNull(equation) && 
+                    IsDoubleOperators(equation) &&
+                    IsDoubleParentheses(equation) &&
+                    BeginsWithMinus(equation));
         }
 
         public bool IsNotNull(string equation)
@@ -59,7 +62,32 @@ namespace Calculator
         {
             return (equation[0] == '-');
         }
-        
+
+        public bool BeginsWithClosedParentheses(string equation)
+        {
+            int counter = 0;
+
+            foreach (char component in equation)
+            {
+                if (openParentheses.Contains(component))
+                {
+                    counter++;
+                }
+
+                if (closeParentheses.Contains(component))
+                {
+                    counter--;
+                }
+
+                if (counter < 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
 
 
 
