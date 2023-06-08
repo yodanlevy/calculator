@@ -4,18 +4,19 @@ namespace Calculator
 {
     public class Validator
     {
-        public string _e;
+        public string _equation;
         public Validator(String equation)
         {
-            _e = equation;
+            _equation = equation;
         }
         public void IsValid()
         {
-            while (string.IsNullOrWhiteSpace(_e))
+            while (string.IsNullOrWhiteSpace(_equation))
             {
                 Console.WriteLine("Error");
-                _e = Console.ReadLine();
+                _equation = Console.ReadLine();
             }
+
         }
     }
 }
