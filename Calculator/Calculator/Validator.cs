@@ -17,7 +17,8 @@ namespace Calculator
             return (IsNotNull(equation) && 
                     IsDoubleOperators(equation) &&
                     IsDoubleParentheses(equation) &&
-                    BeginsWithMinus(equation));
+                    BeginsWithMinus(equation) &&
+                    BeginsWithClosedParentheses(equation));
         }
 
         public bool IsNotNull(string equation)
