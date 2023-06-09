@@ -14,29 +14,29 @@ namespace Calculator
 
         public bool IsValid(string equation)
         {
-            return (IsNotNull(equation) && 
-                    IsDoubleOperators(equation) &&
-                    IsDoubleParentheses(equation) &&
-                    BeginsWithMinus(equation) &&
-                    BeginsWithClosedParentheses(equation));
+            return (!IsNotNull(equation) && 
+                    !IsDoubleOperators(equation) &&
+                    !IsDoubleParentheses(equation) &&
+                    !BeginsWithMinus(equation) &&
+                    !BeginsWithClosedParentheses(equation));
         }
 
         public bool IsNotNull(string equation)
         {
-            return !string.IsNullOrWhiteSpace(equation);
+            return string.IsNullOrWhiteSpace(equation);
         }
 
         public bool IsDoubleOperators(string equation)
         {
-            for (int i = 0; i < operators.Count - 1; i++)
+            for (int i = 0; i < equation.Length - 1; i++)
             {
-                if (operators[i] == operators[i + 1])
+                if (operators.Contains(equation[i]) && equation[i] == equation[i + 1])
                 {
-                    return false;
+                    return true;
                 }
             }
 
-            return true;
+            return false;
         }
 
         public bool IsDoubleParentheses(string equation)
