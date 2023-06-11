@@ -17,7 +17,7 @@ namespace Calculator
             return (!IsNotNull(equation) && 
                     !IsDoubleOperators(equation) &&
                     !IsDoubleParentheses(equation) &&
-                    !BeginsWithMinus(equation) &&
+                    !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation));
         }
 
@@ -59,9 +59,12 @@ namespace Calculator
             return (counter != 0);
         }
 
-        public bool BeginsWithMinus(string equation)
+        public bool BeginsWithOperator(string equation)
         {
-            return (equation[0] == '-');
+            return (equation[0] == '+' ||
+                    equation[0] == '*' ||
+                    equation[0] == ':' ||
+                    equation[0] == '^');
         }
 
         public bool BeginsWithClosedParentheses(string equation)

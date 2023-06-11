@@ -15,7 +15,6 @@ namespace Calculator
                 Console.WriteLine("Please enter new equation:");
                 userInput = Console.ReadLine();
             }
-
         }
     }
 }
