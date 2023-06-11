@@ -18,7 +18,8 @@ namespace Calculator
                     !IsDoubleOperators(equation) &&
                     !IsDoubleParentheses(equation) &&
                     !BeginsWithOperator(equation) &&
-                    !BeginsWithClosedParentheses(equation));
+                    !BeginsWithClosedParentheses(equation) &&
+                    IsMissingParentheses(equation));
         }
 
         public bool IsNotNull(string equation)
@@ -92,8 +93,50 @@ namespace Calculator
             return false;
         }
 
+        public bool IsMissingParentheses(string equation)
+        {
+            int curlyBracketCounter = 0;
+            int squareBracketCounter = 0;
+            int roundBracketCounter = 0;
 
+            for (int i = 0; i < equation.Length; i++)
+            {
+                
+                if (equation[i] == '{')
+                {
+                    curlyBracketCounter++;
+                }
+                if (equation[i] == '[')
+                {
+                    squareBracketCounter++;
+                }
+                if (equation[i] == '(')
+                {
+                    roundBracketCounter++;
+                }
+                if (equation[i] == '}')
+                {
+                    curlyBracketCounter--;
+                }
+                if (equation[i] == ']')
+                {
+                    squareBracketCounter--;
+                }
+                if (equation[i] == ')')
+                {
+                    roundBracketCounter--;
+                }
+            }
 
+            if (curlyBracketCounter != 0 ||
+                squareBracketCounter != 0 ||
+                roundBracketCounter != 0)
+            {
+                return true;
+            }
 
+            return false;
+
+        }
     }
 }
