@@ -14,15 +14,15 @@ namespace Calculator
 
         public bool IsValid(string equation)
         {
-            return (!IsNotNull(equation) && 
+            return (!IsNull(equation) && 
                     !IsDoubleOperators(equation) &&
                     !IsDoubleParentheses(equation) &&
                     !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation) &&
-                    IsMissingParentheses(equation));
+                    !IsMissingParentheses(equation));
         }
 
-        public bool IsNotNull(string equation)
+        public bool IsNull(string equation)
         {
             return string.IsNullOrWhiteSpace(equation);
         }
@@ -106,23 +106,23 @@ namespace Calculator
                 {
                     curlyBracketCounter++;
                 }
-                if (equation[i] == '[')
+                else if (equation[i] == '[')
                 {
                     squareBracketCounter++;
                 }
-                if (equation[i] == '(')
+                else if (equation[i] == '(')
                 {
                     roundBracketCounter++;
                 }
-                if (equation[i] == '}')
+                else if (equation[i] == '}')
                 {
                     curlyBracketCounter--;
                 }
-                if (equation[i] == ']')
+                else if (equation[i] == ']')
                 {
                     squareBracketCounter--;
                 }
-                if (equation[i] == ')')
+                else if (equation[i] == ')')
                 {
                     roundBracketCounter--;
                 }
