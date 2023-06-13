@@ -10,6 +10,7 @@ namespace Calculator
         private List<char> operators = new List<char> {'+', '-', '*', ':', '^'};
         private List<char> openParentheses = new List<char> {'(', '{', '['};
         private List<char> closeParentheses = new List<char> {')', '}', ']'};
+        private List<int> numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
         public bool IsValid(string equation)
@@ -19,7 +20,8 @@ namespace Calculator
                     !IsDoubleParentheses(equation) &&
                     !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation) &&
-                    !IsMissingParentheses(equation));
+                    !IsMissingParentheses(equation) &&
+                    IsNumber(equation));
         }
 
         public bool IsNull(string equation)
@@ -138,5 +140,18 @@ namespace Calculator
             return false;
 
         }
+
+        public bool IsNumber(string equation)
+        {
+            foreach (char component in equation)
+            {
+                if (char.IsDigit(component) == false)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
