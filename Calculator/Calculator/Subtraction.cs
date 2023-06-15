@@ -2,7 +2,7 @@
 {
     public class Subtraction : Operator
     {
-        public int Priority = 6;
+        public int Priority = 3;
         public char OperatorSign = '-';
         public override int Calculate(int leftOperand, int rightOperand)
         {
