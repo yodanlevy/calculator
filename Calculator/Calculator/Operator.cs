@@ -1,6 +1,6 @@
 ﻿namespace Calculator
 {
-    abstract class Operator
+    public abstract class Operator
     { 
         public int Priority;
         public char OperatorSign;   
