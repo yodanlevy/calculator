@@ -145,10 +145,7 @@ namespace Calculator
         {
             foreach (char component in equation)
             {
-                if (char.IsDigit(component) == false && 
-                    operators.Contains(component)&&
-                    openParentheses.Contains(component)&&
-                    closeParentheses.Contains(component))
+                if (char.IsDigit(component) == false)
                 {
                     return false;
                 }
