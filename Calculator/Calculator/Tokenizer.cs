@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Calculator
 {
@@ -8,5 +8,16 @@ namespace Calculator
         private List<char> openParentheses = new List<char> { '(', '{', '[' };
         private List<char> closeParentheses = new List<char> { ')', '}', ']' };
         private List<int> numbers = new List<int> { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+        public void IsOperator(char component)
+        {
+            foreach (Operator op in _operators)
+            {
+                if (component == op.Sign)
+                {
+                    _equationComponents.Add(op);
+                }
+            }
+        }
+
     }
 }
