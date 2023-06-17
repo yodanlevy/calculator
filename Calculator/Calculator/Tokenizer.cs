@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace Calculator
@@ -26,31 +26,11 @@ namespace Calculator
             {
                 IsOperator(equation[i]);
 
-                if (_openParentheses.Contains(equation[i]))
-                {
-                else if (_closeParentheses.Contains(equation[i]))
-                {
-                    _equationComponents.Add(equation[i]);
-                }
-                else if (char.IsDigit(equation[i]))
-                {
-                    string digits = char.ToString(equation[i]);
+                IsOpenParentheses(equation[i]);
 
-                    for (int j = i+1; j < equation.Length; j++)
-                    {
-                        if (char.IsDigit(equation[j]))
-                        {
-                            digits += equation[j];
-                        }
-                        else
-                        {
-                            break;
-                        }
-                    }
+                IsClosedParentheses(equation[i]);
 
-                    _equationComponents.Add(int.Parse(digits));
-
-                }
+                IsNumber(equation, i);
             }
         }
 
@@ -69,7 +49,7 @@ namespace Calculator
         {
             if (_openParentheses.Contains(component))
             {
-                _equationComponents.Add(component);
+                _equationComponents.Add(new OpenParentheses());
             }
         }
 
@@ -77,7 +57,29 @@ namespace Calculator
         {
             if (_closeParentheses.Contains(component))
             {
-                _equationComponents.Add(component);
+                _equationComponents.Add(new ClosedParentheses());
+            }
+        }
+
+        public void IsNumber(string equation, int i)
+        {
+            if (char.IsDigit(equation[i]))
+            {
+                string digits = char.ToString(equation[i]);
+
+                for (int j = i + 1; j < equation.Length; j++)
+                {
+                    if (char.IsDigit(equation[j]))
+                    {
+                        digits += equation[j];
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+
+                _equationComponents.Add(int.Parse(digits));
             }
         }
 
