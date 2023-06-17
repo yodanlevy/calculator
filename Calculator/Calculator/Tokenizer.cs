@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.VisualBasic.CompilerServices;
 
 namespace Calculator
@@ -64,6 +64,14 @@ namespace Calculator
                 {
                     _equationComponents.Add(op);
                 }
+            }
+        }
+
+        public void IsOpenParentheses(char component)
+        {
+            if (_openParentheses.Contains(component))
+            {
+                _equationComponents.Add(component);
             }
         }
 
