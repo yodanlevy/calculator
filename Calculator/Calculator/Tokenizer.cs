@@ -28,8 +28,6 @@ namespace Calculator
 
                 if (_openParentheses.Contains(equation[i]))
                 {
-                    _equationComponents.Add(equation[i]);
-                }
                 else if (_closeParentheses.Contains(equation[i]))
                 {
                     _equationComponents.Add(equation[i]);
@@ -70,6 +68,14 @@ namespace Calculator
         public void IsOpenParentheses(char component)
         {
             if (_openParentheses.Contains(component))
+            {
+                _equationComponents.Add(component);
+            }
+        }
+
+        public void IsClosedParentheses(char component)
+        {
+            if (_closeParentheses.Contains(component))
             {
                 _equationComponents.Add(component);
             }
