@@ -20,7 +20,7 @@ namespace Calculator
         private List<object> _equationComponents = new List<object>();
 
 
-        public void Tokenize(string equation)
+        public List<object> Tokenize(string equation)
         {
             for (int i = 0; i < equation.Length; i++)
             {
@@ -32,11 +32,13 @@ namespace Calculator
 
                 IsNumber(equation, i);
             }
+
+            return _equationComponents;
         }
 
         public void IsOperator(char component)
         {
-            foreach (Operator op in _operators)
+            foreach (var op in _operators)
             {
                 if (component == op.Sign)
                 {

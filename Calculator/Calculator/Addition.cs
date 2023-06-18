@@ -2,9 +2,9 @@
 {
     public class Addition : Operator
     {
-        public int priority = 6;
-        public char operatorSign = '+';
-        
+        public override int Priority => 6;
+
+        public override char Sign => '+';
 
         public override int Calculate(int leftOperand, int rightOperand)
         {
