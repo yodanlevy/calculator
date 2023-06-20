@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Channels;
 
 namespace Calculator
 {
@@ -17,14 +18,14 @@ namespace Calculator
             //    userInput = Console.ReadLine();
             //}
 
-
-            string equation = "1+2*3-(4^5)";
+            var equation = "1+2";
             Tokenizer tokenizer = new Tokenizer();
-            List<object> components = tokenizer.Tokenize(equation);
+            var equationList = tokenizer.Tokenize(equation);
 
+            ALU alu = new ALU();
+            Console.WriteLine("Answer: " + alu.Calculate(equationList));
 
             return;
-
         }
     }
 }
