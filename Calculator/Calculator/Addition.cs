@@ -2,7 +2,7 @@
 {
     public class Addition : Operator
     {
-        public override int Priority => 6;
+        public override int Priority => 1;
 
         public override char Sign => '+';
 
