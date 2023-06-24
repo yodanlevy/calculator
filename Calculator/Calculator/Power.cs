@@ -4,7 +4,7 @@ namespace Calculator
 {
     public class Power : Operator
     {
-        public override int Priority => 4;
+        public override int Priority => 3;
         public override char Sign => '^';
         public override int Calculate(int leftOperand, int rightOperand)
         {
