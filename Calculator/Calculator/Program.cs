@@ -18,14 +18,14 @@ namespace Calculator
             //    userInput = Console.ReadLine();
             //}
 
-            var equation = "1+2*3-4:2";
+            var equation = "1+2";
             Tokenizer tokenizer = new Tokenizer();
             var equationList = tokenizer.Tokenize(equation);
 
             ALU alu = new ALU();
-            Console.WriteLine("Answer: " + alu.Calculate(equationList));
+            var result = alu.Calculate(equationList);
+            Console.WriteLine("Answer: " + result.value);
 
-            return;
         }
     }
 }

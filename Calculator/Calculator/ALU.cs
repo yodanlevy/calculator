@@ -30,6 +30,9 @@ namespace Calculator
             return general_result;
         }
 
+
+
+
         private int isJumpToCurrentIndex(int i, Result result)
         {
             if (result.isNull)
