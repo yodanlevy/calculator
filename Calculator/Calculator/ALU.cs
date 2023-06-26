@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 namespace Calculator
 {
@@ -9,12 +9,16 @@ namespace Calculator
             int leftOperand = 0;
             for (int i = 0; i < components.Count; i++)
             {
-                if (i == components.Count-1)
-                {
-                    return (int) components[i];
-                }
+                isJumpToCurrentIndex(i, general_result);
+        private int isJumpToCurrentIndex(int i, Result result)
+        {
+            if (result.isNull)
+            {
+                i = currentOperatorIndex;
+            }
 
-                if (components[i] is Operator)
+            return i;
+        }
                 {
                     var slicedEquation = components.GetRange(i+1, components.Count - i - 1);
                     var rightOperand = Calculate((List<object>)slicedEquation);
