@@ -6,9 +6,7 @@ namespace Calculator
     public class ALU
     {
         public int currentOperatorIndex = 0;
-        public int intIndex = 0;
         public int priority = 0;
-        public int paranthasesCount = 0;
 
         public Result Calculate(List<object> components)
         {
@@ -23,14 +21,13 @@ namespace Calculator
                     return general_result;
                 }
 
-                IsJumpToCurrentIndex(i, general_result);
+                i = IsJumpToCurrentIndex(i, general_result);
                 leftOperand = IsComponentInt(components, i, leftOperand);
 
                 if (components[i] is Operator)
                 {
                     general_result = IsComponentOperator(components, leftOperand, i, general_result);
                     return general_result;
-
                 }
             }
 
@@ -40,12 +37,14 @@ namespace Calculator
 
 
 
-        private void IsJumpToCurrentIndex(int currentIndex, Result result)
+        private int IsJumpToCurrentIndex(int currentIndex, Result result)
         {
             if (result.isNull)
             {
-                currentIndex = currentOperatorIndex;
+                return currentOperatorIndex;
             }
+
+            return currentIndex;
         }
 
         private Result IsComponentOperator(List<object> components, int leftOperand, int currentIndex, Result result)
@@ -57,11 +56,21 @@ namespace Calculator
                 currentOperatorIndex = currentIndex;
                 result.isNull = true;
             }
+            else
+            {
+                priority = op.Priority;
+                var slicedEquation = components.GetRange(currentIndex + 1, components.Count - currentIndex - 1);
+                var rightOperand = Calculate((List<object>)slicedEquation);
+                if (rightOperand.isNull)
+                {
+                    result.value = leftOperand;
+                }
+                else
+                {
+                    result.value = op.Calculate(leftOperand, rightOperand.value);
+                }
+            }
 
-            priority = op.Priority;
-            var slicedEquation = components.GetRange(currentIndex + 1, components.Count - currentIndex - 1);
-            var rightOperand = Calculate((List<object>)slicedEquation);
-            result.value = op.Calculate(leftOperand, rightOperand.value);
 
             return result;
         }
