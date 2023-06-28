@@ -5,7 +5,7 @@ namespace Calculator
 {
     public class ALU
     {
-        public int currentOperatorIndex = 0;
+        public int currentOperatorIndex = -1;
         public int priority = 0;
 
         public Result Calculate(List<object> components)
@@ -49,6 +49,7 @@ namespace Calculator
 
         private Result IsComponentOperator(List<object> components, int leftOperand, int currentIndex, Result result)
         {
+            currentOperatorIndex++;
             var op = (Operator)components[currentIndex];
 
             if (op.Priority < priority)
@@ -77,6 +78,7 @@ namespace Calculator
 
         private int IsComponentInt(List<object> components, int currentIndex, int leftOperand)
         {
+            currentOperatorIndex++;
             if (components[currentIndex] is int)
             {
                 leftOperand = (int)components[currentIndex];
