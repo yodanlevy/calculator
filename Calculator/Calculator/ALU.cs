@@ -15,6 +15,7 @@ namespace Calculator
             int leftOperand = 0;
             for (int i = 0; i < components.Count; i++)
             {
+                currentOperatorIndex++;
                 if (i == components.Count - 1)
                 {
                     general_result.value = (int)components[i];
@@ -49,7 +50,6 @@ namespace Calculator
 
         private Result IsComponentOperator(List<object> components, int leftOperand, int currentIndex, Result result)
         {
-            currentOperatorIndex++;
             var op = (Operator)components[currentIndex];
 
             if (op.Priority < priority)
@@ -78,7 +78,6 @@ namespace Calculator
 
         private int IsComponentInt(List<object> components, int currentIndex, int leftOperand)
         {
-            currentOperatorIndex++;
             if (components[currentIndex] is int)
             {
                 leftOperand = (int)components[currentIndex];
