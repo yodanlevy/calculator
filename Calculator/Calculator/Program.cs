@@ -21,10 +21,10 @@ namespace Calculator
             var equation = "2*5-4";
             //var equation = "1+2*3";
             Tokenizer tokenizer = new Tokenizer();
-            var equationList = tokenizer.Tokenize(equation);
+            var equationTokens = tokenizer.Tokenize(equation);
 
             ALU alu = new ALU();
-            var result = alu.Calculate(equationList);
+            var result = alu.Calculate(equationTokens);
             Console.WriteLine("Answer: " + result.value);
 
         }
