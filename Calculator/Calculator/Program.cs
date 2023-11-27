@@ -23,7 +23,7 @@ namespace Calculator
             Tokenizer tokenizer = new Tokenizer();
             var equationTokens = tokenizer.Tokenize(equation);
 
-            ALU alu = new ALU();
+            ALU alu = new ALU(equationTokens.Count);
             var result = alu.Calculate(equationTokens);
             Console.WriteLine("Answer: " + result.value);
 

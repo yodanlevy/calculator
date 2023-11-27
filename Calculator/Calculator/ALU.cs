@@ -5,29 +5,48 @@ namespace Calculator
 {
     public class ALU
     {
+        private int _originalTokensCount;
         public int currentOperatorIndex = -1;
+        public int currentIndex = 0;
+        public int recurssionCount = -1;
         public int priority = 0;
+
+        public ALU(int originalTokensCount)
+        {
+            _originalTokensCount = originalTokensCount;
+        }
 
         public Result Calculate(List<object> components)
         {
+            recurssionCount++;
             var general_result = new Result();
 
             int leftOperand = 0;
             for (int i = 0; i < components.Count; i++)
             {
-                currentOperatorIndex++;
+                //currentIndex++;
+
+                // Is last number
                 if (i == components.Count - 1)
                 {
                     general_result.value = (int)components[i];
                     return general_result;
                 }
 
-                i = IsJumpToCurrentIndex(i, general_result);
-                leftOperand = IsComponentInt(components, i, leftOperand);
+                i = IsJumpToOperatorIndex(i, general_result);
+                leftOperand = IsComponentInt(components, ref i, leftOperand);
+
+                if (i >= components.Count) { break; }
 
                 if (components[i] is Operator)
                 {
                     general_result = IsComponentOperator(components, leftOperand, i, general_result);
+                    while (recurssionCount == 0 && currentOperatorIndex != -1)
+                    {
+                        Result newResult = IsComponentOperator(components, general_result.value, currentOperatorIndex, general_result);
+                        general_result.value += newResult.value;
+                    }
+
                     return general_result;
                 }
             }
@@ -35,53 +54,61 @@ namespace Calculator
             return general_result;
         }
 
-
-
-
-        private int IsJumpToCurrentIndex(int currentIndex, Result result)
+        private int IsJumpToOperatorIndex(int index, Result result)
         {
-            if (result.isNull)
+            if (currentOperatorIndex != -1)
             {
-                return currentOperatorIndex;
+                index = currentOperatorIndex;
+                currentOperatorIndex = -1; 
+
+                return index;
             }
 
-            return currentIndex;
+            return index;
         }
 
-        private Result IsComponentOperator(List<object> components, int leftOperand, int currentIndex, Result result)
+        private Result IsComponentOperator(List<object> components, int leftOperand, int index, Result result)
         {
-            var op = (Operator)components[currentIndex];
+            var op = (Operator)components[index];
 
             if (op.Priority < priority)
             {
                 currentOperatorIndex = currentIndex;
                 result.isNull = true;
+                result.value = leftOperand;
             }
             else
             {
                 priority = op.Priority;
-                var slicedEquation = components.GetRange(currentIndex + 1, components.Count - currentIndex - 1);
-                var rightOperand = Calculate((List<object>)slicedEquation);
-                if (rightOperand.isNull)
+                var slicedEquation = new List<object>();
+                if (currentOperatorIndex == index)
                 {
-                    result.value = leftOperand;
+                    slicedEquation = components.GetRange(1, components.Count - 1);
                 }
+
                 else
                 {
-                    result.value = op.Calculate(leftOperand, rightOperand.value);
+                    slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
                 }
+                var rightOperand = Calculate((List<object>)slicedEquation);
+                result.value = op.Calculate(leftOperand, rightOperand.value);
+                recurssionCount--;
+                result.isNull = rightOperand.isNull;
             }
 
-
+            currentIndex++;
             return result;
         }
 
-        private int IsComponentInt(List<object> components, int currentIndex, int leftOperand)
+        private int IsComponentInt(List<object> components, ref int i, int leftOperand)
         {
-            if (components[currentIndex] is int)
+            if (components[i] is int)
             {
-                leftOperand = (int)components[currentIndex];
+                leftOperand = (int)components[i];
+                currentIndex++;
+                i++;
             }
+
 
             return leftOperand;
         }
