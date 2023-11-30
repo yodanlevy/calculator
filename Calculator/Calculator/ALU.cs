@@ -5,16 +5,10 @@ namespace Calculator
 {
     public class ALU
     {
-        private int _originalTokensCount;
         public int currentOperatorIndex = -1;
         public int currentIndex = -1;
         public int recurssionCount = -1;
         public int priority = 0;
-
-        public ALU(int originalTokensCount)
-        {
-            _originalTokensCount = originalTokensCount;
-        }
 
         public Result Calculate(List<object> components)
         {
@@ -79,7 +73,6 @@ namespace Calculator
             if (op.Priority < priority)
             {
                 currentOperatorIndex = currentIndex;
-                result.isNull = true;
                 result.value = leftOperand;
             }
             else
@@ -89,7 +82,6 @@ namespace Calculator
                 var rightOperand = Calculate(slicedEquation);
                 result.value = op.Calculate(leftOperand, rightOperand.value);
                 priority = 0;
-                result.isNull = rightOperand.isNull;
             }
 
           
@@ -101,8 +93,6 @@ namespace Calculator
             if (components[i] is int)
             {
                 leftOperand = (int)components[i];
-                //currentIndex++;
-                //i++;
             }
 
 
