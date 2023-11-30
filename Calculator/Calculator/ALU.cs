@@ -7,7 +7,7 @@ namespace Calculator
     {
         private int _originalTokensCount;
         public int currentOperatorIndex = -1;
-        public int currentIndex = 0;
+        public int currentIndex = -1;
         public int recurssionCount = -1;
         public int priority = 0;
 
@@ -24,7 +24,7 @@ namespace Calculator
             int leftOperand = 0;
             for (int i = 0; i < components.Count; i++)
             {
-                //currentIndex++;
+                currentIndex++;
 
                 // Is last number
                 if (i == components.Count - 1)
@@ -46,7 +46,7 @@ namespace Calculator
                         Result newResult = IsComponentOperator(components, general_result.value, currentOperatorIndex, general_result);
                         general_result.value += newResult.value;
                     }
-
+                    recurssionCount--;
                     return general_result;
                 }
             }
@@ -80,23 +80,14 @@ namespace Calculator
             else
             {
                 priority = op.Priority;
-                var slicedEquation = new List<object>();
-                if (currentOperatorIndex == index)
-                {
-                    slicedEquation = components.GetRange(1, components.Count - 1);
-                }
-
-                else
-                {
-                    slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
-                }
-                var rightOperand = Calculate((List<object>)slicedEquation);
+                var slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
+                var rightOperand = Calculate(slicedEquation);
                 result.value = op.Calculate(leftOperand, rightOperand.value);
-                recurssionCount--;
+                priority = 0;
                 result.isNull = rightOperand.isNull;
             }
 
-            currentIndex++;
+          
             return result;
         }
 
@@ -105,8 +96,8 @@ namespace Calculator
             if (components[i] is int)
             {
                 leftOperand = (int)components[i];
-                currentIndex++;
-                i++;
+                //currentIndex++;
+                //i++;
             }
 
 
