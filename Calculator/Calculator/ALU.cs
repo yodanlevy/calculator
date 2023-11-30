@@ -26,6 +26,11 @@ namespace Calculator
             {
                 currentIndex++;
 
+                if (currentOperatorIndex <= currentIndex)
+                {
+                    currentOperatorIndex = -1;
+                }
+
                 // Is last number
                 if (i == components.Count - 1)
                 {
@@ -40,11 +45,10 @@ namespace Calculator
 
                 if (components[i] is Operator)
                 {
-                    general_result = IsComponentOperator(components, leftOperand, i, general_result);
+                    general_result = IsComponentOperator(components, leftOperand, i);
                     while (recurssionCount == 0 && currentOperatorIndex != -1)
                     {
-                        Result newResult = IsComponentOperator(components, general_result.value, currentOperatorIndex, general_result);
-                        general_result.value += newResult.value;
+                        general_result = IsComponentOperator(components, general_result.value, currentOperatorIndex);
                     }
                     recurssionCount--;
                     return general_result;
@@ -67,8 +71,9 @@ namespace Calculator
             return index;
         }
 
-        private Result IsComponentOperator(List<object> components, int leftOperand, int index, Result result)
+        private Result IsComponentOperator(List<object> components, int leftOperand, int index)
         {
+            var result = new Result();
             var op = (Operator)components[index];
 
             if (op.Priority < priority)
