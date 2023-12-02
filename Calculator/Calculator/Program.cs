@@ -18,7 +18,7 @@ namespace Calculator
             //    userInput = Console.ReadLine();
             //}
 
-            var equation = "2*5-4";
+            var equation = "2*3-2+2+4/2";
             //var equation = "1+2*3";
             Tokenizer tokenizer = new Tokenizer();
             var equationTokens = tokenizer.Tokenize(equation);
