@@ -8,18 +8,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            //Console.WriteLine("Please enter an equation: ");
-            //var userInput = Console.ReadLine();
-            //Validator validator = new Validator();
-            //while (!validator.IsValid(userInput))
-            //{
-            //    Console.WriteLine("Error");
-            //    Console.WriteLine("Please enter new equation:");
-            //    userInput = Console.ReadLine();
-            //}
-
             var equation = "2*3-2+2+4/2";
-            //var equation = "1+2*3";
             Tokenizer tokenizer = new Tokenizer();
             var equationTokens = tokenizer.Tokenize(equation);
 

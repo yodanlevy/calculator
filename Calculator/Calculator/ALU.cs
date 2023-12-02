@@ -65,15 +65,6 @@ namespace Calculator
             return index;
         }
 
-        private Result IsComponentOpenParentheses(List<object> components, int leftOperand, int index)
-        {
-            var result = new Result();
-
-            
-            
-            return result;
-
-        }
 
         private Result IsComponentOperator(List<object> components, int leftOperand, int index)
         {

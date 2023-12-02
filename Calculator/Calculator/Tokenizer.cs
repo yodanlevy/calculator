@@ -5,7 +5,7 @@ namespace Calculator
 {
     public class Tokenizer
     {
-        //private List<char> operators = new List<char> { '+', '-', '*', ':', '^' };
+        private bool _isMinus = false;
         private List<Operator> _operators = new List<Operator> { 
             new Addition(), 
             new Subtraction(), 
@@ -42,7 +42,16 @@ namespace Calculator
             {
                 if (component == op.Sign)
                 {
-                    _equationComponents.Add(op);
+                    if(component == '-')
+                    {
+                        Addition addition = new Addition();
+                        _equationComponents.Add(addition);
+                        _isMinus = true;
+                    }
+                    else
+                    {
+                        _equationComponents.Add(op);
+                    }
                 }
             }
         }
@@ -80,8 +89,13 @@ namespace Calculator
                         break;
                     }
                 }
-
-                _equationComponents.Add(int.Parse(digits));
+                int number = int.Parse(digits);
+                if (_isMinus)
+                {
+                    number = 0 - number;
+                    _isMinus = false;
+                }
+                _equationComponents.Add(number);
             }
         }
 
