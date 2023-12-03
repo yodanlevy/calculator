@@ -6,7 +6,7 @@ namespace Calculator
     public class Tokenizer
     {
         private bool _isMinus = false;
-        private List<Operator> _operators = new List<Operator> { 
+        private List<IOperator> _operators = new List<IOperator> { 
             new Addition(), 
             new Subtraction(), 
             new Multiplication(), 
@@ -30,7 +30,7 @@ namespace Calculator
 
                 IsClosedParentheses(equation[i]);
 
-                IsNumber(equation, i);
+                IsNumber(equation, ref i);
             }
 
             return _equationComponents;
@@ -72,7 +72,7 @@ namespace Calculator
             }
         }
 
-        public void IsNumber(string equation, int i)
+        public void IsNumber(string equation, ref int i)
         {
             if (char.IsDigit(equation[i]))
             {
@@ -83,6 +83,7 @@ namespace Calculator
                     if (char.IsDigit(equation[j]))
                     {
                         digits += equation[j];
+                        i++;
                     }
                     else
                     {
