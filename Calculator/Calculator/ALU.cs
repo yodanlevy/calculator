@@ -10,6 +10,7 @@ namespace Calculator
         public int recurssionCount = -1;
         public int priority = 0;
 
+
         public Result Calculate(List<object> components)
         {
             recurssionCount++;
@@ -37,7 +38,7 @@ namespace Calculator
 
                 if (i >= components.Count) { break; }
 
-                if (components[i] is Operator)
+                if (components[i] is IOperator)
                 {
                     general_result = IsComponentOperator(components, leftOperand, i);
                     while (recurssionCount == 0 && currentOperatorIndex != -1)
@@ -65,11 +66,10 @@ namespace Calculator
             return index;
         }
 
-
         private Result IsComponentOperator(List<object> components, int leftOperand, int index)
         {
             var result = new Result();
-            var op = (Operator)components[index];
+            var op = (IOperator)components[index];
 
             if (op.Priority < priority)
             {

@@ -1,12 +1,12 @@
 ﻿namespace Calculator
 {
-    public class Addition : Operator
+    public class Addition : IOperator
     {
-        public override int Priority => 1;
+        public  int Priority => 1;
 
-        public override char Sign => '+';
+        public  char Sign => '+';
 
-        public override int Calculate(int leftOperand, int rightOperand)
+        public  int Calculate(int leftOperand, int rightOperand)
         {
             return leftOperand + rightOperand;
         }
