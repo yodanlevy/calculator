@@ -42,22 +42,25 @@ namespace Calculator
             return false;
         }
 
-        public bool IsParenthesesValid(char token)
+        public bool IsParenthesesValid(string equation)
         {
             Stack<char> currentOpenParentheses = new Stack<char>();
-            if (_openParentheses.Contains(token))
+            foreach (char token in equation)
             {
-                currentOpenParentheses.Push(token);
-            }
-            else if (_closeParentheses.Contains(token))
-            {
-                char lastOpenParentheses = currentOpenParentheses.Peek();
-                if (_openParentheses.IndexOf(lastOpenParentheses) != _closeParentheses.IndexOf(token))
+                if (_openParentheses.Contains(token))
                 {
-                    return false;
+                    currentOpenParentheses.Push(token);
                 }
+                else if (_closeParentheses.Contains(token))
+                {
+                    char lastOpenParentheses = currentOpenParentheses.Peek();
+                    if (_openParentheses.IndexOf(lastOpenParentheses) != _closeParentheses.IndexOf(token))
+                    {
+                        return false;
+                    }
 
-                currentOpenParentheses.Pop();
+                    currentOpenParentheses.Pop();
+                }
             }
 
             return (currentOpenParentheses.Count != 0);
