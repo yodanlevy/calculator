@@ -2,11 +2,11 @@
 
 namespace Calculator
 {
-    public class Power : Operator
+    public class Power : IOperator
     {
-        public override int Priority => 4;
-        public override char Sign => '^';
-        public override int Calculate(int leftOperand, int rightOperand)
+        public int Priority => 3;
+        public char Sign => '^';
+        public int Calculate(int leftOperand, int rightOperand)
         {
             return (int)Math.Pow(leftOperand, rightOperand);
         }

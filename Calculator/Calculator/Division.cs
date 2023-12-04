@@ -1,10 +1,10 @@
 ﻿namespace Calculator
 {
-    public class Division: Operator
+    public class Division: IOperator
     {
-        public override int Priority => 5;
-        public override char Sign => ':';
-        public override int Calculate(int leftOperand, int rightOperand)
+        public int Priority => 2;
+        public char Sign => '/';
+        public int Calculate(int leftOperand, int rightOperand)
         {
             return (leftOperand / rightOperand);
         }
