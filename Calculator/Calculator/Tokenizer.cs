@@ -18,6 +18,7 @@ namespace Calculator
         private List<char> _openParentheses = new List<char> { '(', '{', '[' };
         private List<char> _closeParentheses = new List<char> { ')', '}', ']' };
         private List<object> _equationComponents = new List<object>();
+        private Validator validator;
 
 
         public List<object> Tokenize(string equation)
@@ -26,12 +27,10 @@ namespace Calculator
             {
                 IsOperator(equation[i]);
 
-                IsOpenParentheses(equation[i]);
-
-                IsClosedParentheses(equation[i]);
-
                 IsNumber(equation, ref i);
             }
+            
+            validator.IsParenthesesValid(equation);
 
             return _equationComponents;
         }

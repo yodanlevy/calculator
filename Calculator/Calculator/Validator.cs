@@ -7,22 +7,22 @@ namespace Calculator
 {
     public class Validator
     {
-        private List<char> operators = new List<char> {'+', '-', '*', ':', '^'};
-        private List<char> openParentheses = new List<char> {'(', '{', '['};
-        private List<char> closeParentheses = new List<char> {')', '}', ']'};
-        private List<int> numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        private List<char> _operators = new List<char> {'+', '-', '*', ':', '^'};
+        private List<char> _openParentheses = new List<char> {'(', '{', '['};
+        private List<char> _closeParentheses = new List<char> {')', '}', ']'};
+        private List<int> _numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
-        public bool IsValid(string equation)
-        {
-            return (!IsNull(equation) && 
-                    !IsDoubleOperators(equation) &&
-                    !IsDoubleParentheses(equation) &&
-                    !BeginsWithOperator(equation) &&
-                    !BeginsWithClosedParentheses(equation) &&
-                    !IsMissingParentheses(equation) &&
-                    IsNumber(equation));
-        }
+        //public bool IsValid(string equation)
+        //{
+        //    return (!IsNull(equation) && 
+        //            !IsDoubleOperators(equation) &&
+        //            !IsParenthesesValid(equation[i]) &&
+        //            !BeginsWithOperator(equation) &&
+        //            !BeginsWithClosedParentheses(equation) &&
+        //            !IsMissingParentheses(equation) &&
+        //            IsNumber(equation));
+        //}
 
         public bool IsNull(string equation)
         {
@@ -33,7 +33,7 @@ namespace Calculator
         {
             for (int i = 0; i < equation.Length - 1; i++)
             {
-                if (operators.Contains(equation[i]) && equation[i] == equation[i + 1])
+                if (_operators.Contains(equation[i]) && equation[i] == equation[i + 1])
                 {
                     return true;
                 }
@@ -42,24 +42,25 @@ namespace Calculator
             return false;
         }
 
-        public bool IsDoubleParentheses(string equation)
+        public bool IsParenthesesValid(char token)
         {
-            int counter = 0;
-
-            foreach (char component in equation)
+            Stack<char> currentOpenParentheses = new Stack<char>();
+            if (_openParentheses.Contains(token))
             {
-                if (openParentheses.Contains(component))
+                currentOpenParentheses.Push(token);
+            }
+            else if (_closeParentheses.Contains(token))
+            {
+                char lastOpenParentheses = currentOpenParentheses.Peek();
+                if (_openParentheses.IndexOf(lastOpenParentheses) != _closeParentheses.IndexOf(token))
                 {
-                    counter++;
+                    return false;
                 }
 
-                if (closeParentheses.Contains(component))
-                {
-                    counter--;
-                }
+                currentOpenParentheses.Pop();
             }
 
-            return (counter != 0);
+            return (currentOpenParentheses.Count != 0);
         }
 
         public bool BeginsWithOperator(string equation)
@@ -76,12 +77,12 @@ namespace Calculator
 
             foreach (char component in equation)
             {
-                if (openParentheses.Contains(component))
+                if (_openParentheses.Contains(component))
                 {
                     counter++;
                 }
 
-                if (closeParentheses.Contains(component))
+                if (_closeParentheses.Contains(component))
                 {
                     counter--;
                 }
@@ -146,9 +147,9 @@ namespace Calculator
             foreach (char component in equation)
             {
                 if (char.IsDigit(component) == false && 
-                    operators.Contains(component)&&
-                    openParentheses.Contains(component)&&
-                    closeParentheses.Contains(component))
+                    _operators.Contains(component)&&
+                    _openParentheses.Contains(component)&&
+                    _closeParentheses.Contains(component))
                 {
                     return false;
                 }
