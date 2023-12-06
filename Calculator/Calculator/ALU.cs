@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Transactions;
 
 namespace Calculator
@@ -57,6 +57,12 @@ namespace Calculator
                     openParenthesesRecurssionCount = recurssionCount;
                     general_result = IsOpenParentheses(components, i);
                 }
+
+                if (components[i] is ClosedParentheses)
+                {
+                    general_result = IsClosedParentheses(components, leftOperand, i);
+                }
+
             }
 
             return general_result;
@@ -66,6 +72,14 @@ namespace Calculator
         {
             var slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
             return Calculate(slicedEquation);
+        }
+        private Result IsClosedParentheses(List<object> components, int leftOperand, int index)
+        {
+            recurssionCount--;
+            var result = new Result();
+            closedParenthesesIndex = index;
+            result.value = leftOperand;
+            return result;
         }
         private int IsJumpToOperatorIndex(int index, Result result)
         {
