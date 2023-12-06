@@ -99,52 +99,6 @@ namespace Calculator
             return false;
         }
 
-        public bool IsMissingParentheses(string equation)
-        {
-            int curlyBracketCounter = 0;
-            int squareBracketCounter = 0;
-            int roundBracketCounter = 0;
-
-            for (int i = 0; i < equation.Length; i++)
-            {
-                
-                if (equation[i] == '{')
-                {
-                    curlyBracketCounter++;
-                }
-                else if (equation[i] == '[')
-                {
-                    squareBracketCounter++;
-                }
-                else if (equation[i] == '(')
-                {
-                    roundBracketCounter++;
-                }
-                else if (equation[i] == '}')
-                {
-                    curlyBracketCounter--;
-                }
-                else if (equation[i] == ']')
-                {
-                    squareBracketCounter--;
-                }
-                else if (equation[i] == ')')
-                {
-                    roundBracketCounter--;
-                }
-            }
-
-            if (curlyBracketCounter != 0 ||
-                squareBracketCounter != 0 ||
-                roundBracketCounter != 0)
-            {
-                return true;
-            }
-
-            return false;
-
-        }
-
         public bool IsNumber(string equation)
         {
             foreach (char component in equation)
