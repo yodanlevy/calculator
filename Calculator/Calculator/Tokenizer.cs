@@ -28,6 +28,10 @@ namespace Calculator
                 IsOperator(equation[i]);
 
                 IsNumber(equation, ref i);
+
+                IsOpenParentheses(equation[i]);
+                
+                IsClosedParentheses(equation[i]);
             }
             
             validator.IsParenthesesValid(equation);
@@ -35,6 +39,7 @@ namespace Calculator
             return _equationComponents;
         }
 
+      
         public void IsOperator(char component)
         {
             foreach (var op in _operators)
@@ -59,7 +64,7 @@ namespace Calculator
         {
             if (_openParentheses.Contains(component))
             {
-                _equationComponents.Add(new OpenParentheses());
+                _equationComponents.Add(new OpenParentheses(component));
             }
         }
 
@@ -67,7 +72,7 @@ namespace Calculator
         {
             if (_closeParentheses.Contains(component))
             {
-                _equationComponents.Add(new ClosedParentheses());
+                _equationComponents.Add(new ClosedParentheses(component));
             }
         }
 
