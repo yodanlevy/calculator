@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Transactions;
 
 namespace Calculator
@@ -9,6 +9,8 @@ namespace Calculator
         public int currentIndex = -1;
         public int recurssionCount = -1;
         public int priority = 0;
+        public int closedParenthesesIndex = -1;
+        public int openParenthesesRecurssionCount = -1;
 
 
         public Result Calculate(List<object> components)
