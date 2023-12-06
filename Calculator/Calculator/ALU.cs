@@ -50,11 +50,23 @@ namespace Calculator
                     recurssionCount--;
                     return general_result;
                 }
+
+                if (components[i] is OpenParentheses)
+                {
+                    recurssionCount++;
+                    openParenthesesRecurssionCount = recurssionCount;
+                    general_result = IsOpenParentheses(components, i);
+                }
             }
 
             return general_result;
         }
 
+        private Result IsOpenParentheses(List<object> components, int index)
+        {
+            var slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
+            return Calculate(slicedEquation);
+        }
         private int IsJumpToOperatorIndex(int index, Result result)
         {
             if (currentOperatorIndex != -1)
