@@ -18,7 +18,7 @@ namespace Calculator
         private List<char> _openParentheses = new List<char> { '(', '{', '[' };
         private List<char> _closeParentheses = new List<char> { ')', '}', ']' };
         private List<object> _equationComponents = new List<object>();
-        private Validator validator;
+        private Validator validator = new Validator();
 
 
         public List<object> Tokenize(string equation)
