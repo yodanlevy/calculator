@@ -11,8 +11,11 @@ namespace Calculator
         public int priority = 0;
         public int closedParenthesesIndex = -1;
         public int openParenthesesRecurssionCount = -1;
-
-
+        public int equationLength;
+        public ALU(int equationLength)
+        {
+            this.equationLength = equationLength;
+        }
         public Result Calculate(List<object> components)
         {
             recurssionCount++;
@@ -23,13 +26,10 @@ namespace Calculator
             {
                 currentIndex++;
 
-                if (currentOperatorIndex <= currentIndex)
-                {
-                    currentOperatorIndex = -1;
-                }
+                currentOperatorIndex = -1;
 
                 // Is last number
-                if (i == components.Count - 1)
+                if (i == components.Count -1 && !(components[i] is ClosedParentheses))
                 {
                     general_result.value = (int)components[i];
                     return general_result;
@@ -53,14 +53,25 @@ namespace Calculator
 
                 if (components[i] is OpenParentheses)
                 {
-                    recurssionCount++;
+                    //recurssionCount++;
                     openParenthesesRecurssionCount = recurssionCount;
                     general_result = IsOpenParentheses(components, i);
+                    
+                    if (openParenthesesRecurssionCount == recurssionCount && closedParenthesesIndex != -1)
+                    {
+                        if (closedParenthesesIndex >= equationLength)
+                        {
+                            return general_result;
+                        }
+
+                        i = closedParenthesesIndex + 1;
+                    }
                 }
 
                 if (components[i] is ClosedParentheses)
                 {
                     general_result = IsClosedParentheses(components, leftOperand, i);
+                    return general_result;
                 }
 
             }
@@ -77,7 +88,7 @@ namespace Calculator
         {
             recurssionCount--;
             var result = new Result();
-            closedParenthesesIndex = index;
+            closedParenthesesIndex = currentIndex;
             result.value = leftOperand;
             return result;
         }
@@ -91,6 +102,11 @@ namespace Calculator
                 return index;
             }
 
+            if (closedParenthesesIndex != -1)
+            {
+                index = closedParenthesesIndex + 1;
+                closedParenthesesIndex = -1;
+            }
             return index;
         }
 
