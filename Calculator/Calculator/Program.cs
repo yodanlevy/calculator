@@ -9,11 +9,10 @@ namespace Calculator
         static void Main(string[] args)
         {
             Tokenizer tokenizer = new Tokenizer();
-            //var equation = "3^3-2*3+10/2";
-            var equation = "2+1{[]}";
+            var equation = "(2*3)-1";
             var equationTokens = tokenizer.Tokenize(equation);
 
-            ALU alu = new ALU();
+            ALU alu = new ALU(equation.Length);
             var result = alu.Calculate(equationTokens);
             Console.WriteLine("Answer: " + result.value);
         }
