@@ -64,7 +64,10 @@ namespace Calculator
                             return general_result;
                         }
 
-                        i = closedParenthesesIndex + 1;
+                        leftOperand = general_result.value;
+                        currentIndex++;
+                        i = closedParenthesesIndex;
+                        continue;
                     }
                 }
 
