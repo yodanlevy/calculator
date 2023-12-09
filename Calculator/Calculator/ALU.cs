@@ -53,22 +53,19 @@ namespace Calculator
 
                 if (components[i] is OpenParentheses)
                 {
-                    recurssionCount++;
                     openParenthesesRecurssionCount = recurssionCount;
                     general_result = IsOpenParentheses(components, i);
                     
                     if (openParenthesesRecurssionCount == recurssionCount && closedParenthesesIndex != -1)
                     {
-                        if (closedParenthesesIndex >= equationLength)
-                        {
-                            return general_result;
-                        }
-
                         leftOperand = general_result.value;
-                        currentIndex++;
                         i = closedParenthesesIndex;
+                        closedParenthesesIndex = -1;
                         continue;
                     }
+
+                    recurssionCount--;
+                    return general_result;
                 }
 
                 if (components[i] is ClosedParentheses)
