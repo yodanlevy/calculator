@@ -53,7 +53,7 @@ namespace Calculator
 
                 if (components[i] is OpenParentheses)
                 {
-                    //recurssionCount++;
+                    recurssionCount++;
                     openParenthesesRecurssionCount = recurssionCount;
                     general_result = IsOpenParentheses(components, i);
                     
@@ -90,6 +90,7 @@ namespace Calculator
         private Result IsClosedParentheses(List<object> components, int leftOperand, int index)
         {
             recurssionCount--;
+            openParenthesesRecurssionCount--;
             var result = new Result();
             closedParenthesesIndex = currentIndex;
             result.value = leftOperand;
