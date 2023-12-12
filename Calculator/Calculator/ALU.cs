@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Transactions;
 
 namespace Calculator
@@ -12,6 +12,8 @@ namespace Calculator
         public int closedParenthesesIndex = -1;
         public int openParenthesesRecurssionCount = -1;
         public int equationLength;
+        private int lastOpenParenthesesRecurssionCount = -1;
+
         public ALU(int equationLength)
         {
             this.equationLength = equationLength;
@@ -47,6 +49,15 @@ namespace Calculator
                     {
                         general_result = IsComponentOperator(components, general_result.value, currentOperatorIndex);
                     }
+
+
+                    if (currentIndex < components.Count && recurssionCount == 0)
+                    {
+                        i = currentIndex;
+                        leftOperand = general_result.value;
+                        continue;
+                    }
+
                     recurssionCount--;
                     return general_result;
                 }
@@ -61,6 +72,13 @@ namespace Calculator
                         leftOperand = general_result.value;
                         i = closedParenthesesIndex;
                         closedParenthesesIndex = -1;
+
+                        continue;
+                    }
+
+                    if (currentIndex < components.Count && recurssionCount == 0)
+                    {
+                        i = currentIndex;
                         continue;
                     }
 
@@ -116,7 +134,7 @@ namespace Calculator
             var result = new Result();
             var op = (IOperator)components[index];
 
-            if (op.Priority < priority)
+            if (lastOpenParenthesesRecurssionCount >= openParenthesesRecurssionCount && op.Priority < priority)
             {
                 currentOperatorIndex = currentIndex;
                 result.value = leftOperand;
@@ -124,10 +142,12 @@ namespace Calculator
             else
             {
                 priority = op.Priority;
+                lastOpenParenthesesRecurssionCount = openParenthesesRecurssionCount;
                 var slicedEquation = components.GetRange(index + 1, components.Count - index - 1);
                 var rightOperand = Calculate(slicedEquation);
                 result.value = op.Calculate(leftOperand, rightOperand.value);
                 priority = 0;
+                lastOpenParenthesesRecurssionCount = -1;
             }
 
           
