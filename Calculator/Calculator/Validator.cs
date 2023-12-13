@@ -13,16 +13,15 @@ namespace Calculator
         private List<int> _numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
-        //public bool IsValid(string equation)
-        //{
-        //    return (!IsNull(equation) && 
-        //            !IsDoubleOperators(equation) &&
-        //            !IsParenthesesValid(equation[i]) &&
-        //            !BeginsWithOperator(equation) &&
-        //            !BeginsWithClosedParentheses(equation) &&
-        //            !IsMissingParentheses(equation) &&
-        //            IsNumber(equation));
-        //}
+        public bool IsValid(string equation)
+        {
+            return (!IsNull(equation) &&
+                    !IsDoubleOperators(equation) &&
+                    !IsParenthesesValid(equation) &&
+                    !BeginsWithOperator(equation) &&
+                    !BeginsWithClosedParentheses(equation) &&
+                    IsNumber(equation));
+        }
 
         public bool IsNull(string equation)
         {
