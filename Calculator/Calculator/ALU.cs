@@ -79,6 +79,7 @@ namespace Calculator
                     if (currentIndex < components.Count && recurssionCount == 0)
                     {
                         i = currentIndex;
+                        leftOperand = general_result.value;
                         continue;
                     }
 
