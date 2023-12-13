@@ -90,6 +90,12 @@ namespace Calculator
                 if (components[i] is ClosedParentheses)
                 {
                     general_result = IsClosedParentheses(components, leftOperand, i);
+                    if (currentIndex < components.Count && recurssionCount == -1)
+                    {
+                        i = currentIndex;
+                        leftOperand = general_result.value;
+                        continue;
+                    }
                     return general_result;
                 }
 
