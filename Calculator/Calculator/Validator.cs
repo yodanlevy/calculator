@@ -38,7 +38,34 @@ namespace Calculator
 
         public bool IsParenthesesValid(string equation)
         {
+            List<char> openParentheses = new List<char>();
+            List<char> closeParentheses = new List<char>();
+            foreach (var VARIABLE in equation)
+            {
+                if (_openParentheses.Contains(VARIABLE))
+                {
+                    openParentheses.Add(VARIABLE);
+                }
+
+                if (_closeParentheses.Contains(VARIABLE))
+                {
+                    closeParentheses.Add(VARIABLE);
+                }
+
+                if (closeParentheses.Count > openParentheses.Count)
+                {
+                    return false;
+                }
+            }
+
+            if (openParentheses.Count != closeParentheses.Count)
+            {
+                return false;
+            }
+
             Stack<char> currentOpenParentheses = new Stack<char>();
+            char lastOpenParentheses;
+
             foreach (char token in equation)
             {
                 if (_openParentheses.Contains(token))
@@ -47,7 +74,7 @@ namespace Calculator
                 }
                 else if (_closeParentheses.Contains(token))
                 {
-                    char lastOpenParentheses = currentOpenParentheses.Peek();
+                    lastOpenParentheses = currentOpenParentheses.Peek();
                     if (_openParentheses.IndexOf(lastOpenParentheses) != _closeParentheses.IndexOf(token))
                     {
                         return false;
