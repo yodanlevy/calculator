@@ -15,17 +15,12 @@ namespace Calculator
 
         public bool IsValid(string equation)
         {
-            return (!IsNull(equation) &&
+            return (!string.IsNullOrWhiteSpace(equation) &&
                     !IsDoubleOperators(equation) &&
                     !IsParenthesesValid(equation) &&
                     !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation) &&
                     IsNumber(equation));
-        }
-
-        public bool IsNull(string equation)
-        {
-            return string.IsNullOrWhiteSpace(equation);
         }
 
         public bool IsDoubleOperators(string equation)

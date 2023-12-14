@@ -8,7 +8,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            var equation = "(8*(6-4))/2";
+            string equation = null;
             var validator = new Validator();
             if (validator.IsValid(equation))
             {
@@ -17,6 +17,10 @@ namespace Calculator
                 ALU alu = new ALU(equation.Length);
                 var result = alu.Calculate(equationTokens);
                 Console.WriteLine("Answer: " + result.value);
+            }
+            else
+            {
+                Console.WriteLine("Not valid");
             }
         }
     }
