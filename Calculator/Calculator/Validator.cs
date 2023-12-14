@@ -89,10 +89,7 @@ namespace Calculator
 
         public bool BeginsWithOperator(string equation)
         {
-            return (equation[0] == '+' ||
-                    equation[0] == '*' ||
-                    equation[0] == ':' ||
-                    equation[0] == '^');
+            return (_operators.Contains(equation[0]) && equation[0] != '-');
         }
 
         public bool BeginsWithClosedParentheses(string equation)
