@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Microsoft.VisualBasic.CompilerServices;
@@ -63,6 +63,8 @@ namespace Calculator
                 return false;
             }
 
+        public bool IsSameParentheses(string equation)
+        {
             Stack<char> currentOpenParentheses = new Stack<char>();
             char lastOpenParentheses;
 
@@ -84,7 +86,7 @@ namespace Calculator
                 }
             }
 
-            return (currentOpenParentheses.Count != 0);
+            return (currentOpenParentheses.Count == 0);
         }
 
         public bool BeginsWithOperator(string equation)
