@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection.Metadata;
 using Microsoft.VisualBasic.CompilerServices;
@@ -17,7 +17,7 @@ namespace Calculator
         {
             return (!string.IsNullOrWhiteSpace(equation) &&
                     !IsDoubleOperators(equation) &&
-                    !IsParenthesesValid(equation) &&
+                    IsParenthesesValid(equation) &&
                     !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation) &&
                     IsNumber(equation));
@@ -38,30 +38,35 @@ namespace Calculator
 
         public bool IsParenthesesValid(string equation)
         {
-            List<char> openParentheses = new List<char>();
-            List<char> closeParentheses = new List<char>();
+            return (IsParenthesesInOrder(equation) && IsSameParentheses(equation));
+
+        }
+
+        public bool IsParenthesesInOrder(string equation)
+        {
+            var openParenthesesCount = 0;
+            var closeParenthesesCount = 0;
             foreach (var VARIABLE in equation)
             {
                 if (_openParentheses.Contains(VARIABLE))
                 {
-                    openParentheses.Add(VARIABLE);
+                    openParenthesesCount++;
                 }
 
                 if (_closeParentheses.Contains(VARIABLE))
                 {
-                    closeParentheses.Add(VARIABLE);
+                    closeParenthesesCount++;
                 }
 
-                if (closeParentheses.Count > openParentheses.Count)
+                if (closeParenthesesCount > openParenthesesCount)
                 {
                     return false;
                 }
             }
 
-            if (openParentheses.Count != closeParentheses.Count)
-            {
-                return false;
-            }
+            return (openParenthesesCount == closeParenthesesCount);
+
+        }
 
         public bool IsSameParentheses(string equation)
         {

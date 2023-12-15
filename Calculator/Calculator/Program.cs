@@ -8,7 +8,7 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            string equation = "-2+1";
+            string equation = "{-1+2)";
             var validator = new Validator();
             if (validator.IsValid(equation))
             {
