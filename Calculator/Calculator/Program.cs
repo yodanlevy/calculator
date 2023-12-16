@@ -8,13 +8,20 @@ namespace Calculator
     {
         static void Main(string[] args)
         {
-            Tokenizer tokenizer = new Tokenizer();
-            var equation = "3^3-2*3+10/2";
-            var equationTokens = tokenizer.Tokenize(equation);
-
-            ALU alu = new ALU();
-            var result = alu.Calculate(equationTokens);
-            Console.WriteLine("Answer: " + result.value);
+            string equation = "{-1+2)";
+            var validator = new Validator();
+            if (validator.IsValid(equation))
+            {
+                Tokenizer tokenizer = new Tokenizer();
+                var equationTokens = tokenizer.Tokenize(equation);
+                ALU alu = new ALU(equation.Length);
+                var result = alu.Calculate(equationTokens);
+                Console.WriteLine("Answer: " + result.value);
+            }
+            else
+            {
+                Console.WriteLine("Not valid");
+            }
         }
     }
 }

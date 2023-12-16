@@ -7,33 +7,27 @@ namespace Calculator
 {
     public class Validator
     {
-        private List<char> operators = new List<char> {'+', '-', '*', ':', '^'};
-        private List<char> openParentheses = new List<char> {'(', '{', '['};
-        private List<char> closeParentheses = new List<char> {')', '}', ']'};
-        private List<int> numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        private List<char> _operators = new List<char> {'+', '-', '*', ':', '^'};
+        private List<char> _openParentheses = new List<char> {'(', '{', '['};
+        private List<char> _closeParentheses = new List<char> {')', '}', ']'};
+        private List<int> _numbers = new List<int> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
         public bool IsValid(string equation)
         {
-            return (!IsNull(equation) && 
+            return (!string.IsNullOrWhiteSpace(equation) &&
                     !IsDoubleOperators(equation) &&
-                    !IsDoubleParentheses(equation) &&
+                    IsParenthesesValid(equation) &&
                     !BeginsWithOperator(equation) &&
                     !BeginsWithClosedParentheses(equation) &&
-                    !IsMissingParentheses(equation) &&
                     IsNumber(equation));
-        }
-
-        public bool IsNull(string equation)
-        {
-            return string.IsNullOrWhiteSpace(equation);
         }
 
         public bool IsDoubleOperators(string equation)
         {
             for (int i = 0; i < equation.Length - 1; i++)
             {
-                if (operators.Contains(equation[i]) && equation[i] == equation[i + 1])
+                if (_operators.Contains(equation[i]) && equation[i] == equation[i + 1])
                 {
                     return true;
                 }
@@ -42,32 +36,67 @@ namespace Calculator
             return false;
         }
 
-        public bool IsDoubleParentheses(string equation)
+        public bool IsParenthesesValid(string equation)
         {
-            int counter = 0;
+            return (IsParenthesesInOrder(equation) && IsSameParentheses(equation));
 
-            foreach (char component in equation)
+        }
+
+        public bool IsParenthesesInOrder(string equation)
+        {
+            var openParenthesesCount = 0;
+            var closeParenthesesCount = 0;
+            foreach (var VARIABLE in equation)
             {
-                if (openParentheses.Contains(component))
+                if (_openParentheses.Contains(VARIABLE))
                 {
-                    counter++;
+                    openParenthesesCount++;
                 }
 
-                if (closeParentheses.Contains(component))
+                if (_closeParentheses.Contains(VARIABLE))
                 {
-                    counter--;
+                    closeParenthesesCount++;
+                }
+
+                if (closeParenthesesCount > openParenthesesCount)
+                {
+                    return false;
                 }
             }
 
-            return (counter != 0);
+            return (openParenthesesCount == closeParenthesesCount);
+
+        }
+
+        public bool IsSameParentheses(string equation)
+        {
+            Stack<char> currentOpenParentheses = new Stack<char>();
+            char lastOpenParentheses;
+
+            foreach (char token in equation)
+            {
+                if (_openParentheses.Contains(token))
+                {
+                    currentOpenParentheses.Push(token);
+                }
+                else if (_closeParentheses.Contains(token))
+                {
+                    lastOpenParentheses = currentOpenParentheses.Peek();
+                    if (_openParentheses.IndexOf(lastOpenParentheses) != _closeParentheses.IndexOf(token))
+                    {
+                        return false;
+                    }
+
+                    currentOpenParentheses.Pop();
+                }
+            }
+
+            return (currentOpenParentheses.Count == 0);
         }
 
         public bool BeginsWithOperator(string equation)
         {
-            return (equation[0] == '+' ||
-                    equation[0] == '*' ||
-                    equation[0] == ':' ||
-                    equation[0] == '^');
+            return (_operators.Contains(equation[0]) && equation[0] != '-');
         }
 
         public bool BeginsWithClosedParentheses(string equation)
@@ -76,12 +105,12 @@ namespace Calculator
 
             foreach (char component in equation)
             {
-                if (openParentheses.Contains(component))
+                if (_openParentheses.Contains(component))
                 {
                     counter++;
                 }
 
-                if (closeParentheses.Contains(component))
+                if (_closeParentheses.Contains(component))
                 {
                     counter--;
                 }
@@ -95,60 +124,14 @@ namespace Calculator
             return false;
         }
 
-        public bool IsMissingParentheses(string equation)
-        {
-            int curlyBracketCounter = 0;
-            int squareBracketCounter = 0;
-            int roundBracketCounter = 0;
-
-            for (int i = 0; i < equation.Length; i++)
-            {
-                
-                if (equation[i] == '{')
-                {
-                    curlyBracketCounter++;
-                }
-                else if (equation[i] == '[')
-                {
-                    squareBracketCounter++;
-                }
-                else if (equation[i] == '(')
-                {
-                    roundBracketCounter++;
-                }
-                else if (equation[i] == '}')
-                {
-                    curlyBracketCounter--;
-                }
-                else if (equation[i] == ']')
-                {
-                    squareBracketCounter--;
-                }
-                else if (equation[i] == ')')
-                {
-                    roundBracketCounter--;
-                }
-            }
-
-            if (curlyBracketCounter != 0 ||
-                squareBracketCounter != 0 ||
-                roundBracketCounter != 0)
-            {
-                return true;
-            }
-
-            return false;
-
-        }
-
         public bool IsNumber(string equation)
         {
             foreach (char component in equation)
             {
                 if (char.IsDigit(component) == false && 
-                    operators.Contains(component)&&
-                    openParentheses.Contains(component)&&
-                    closeParentheses.Contains(component))
+                    _operators.Contains(component)&&
+                    _openParentheses.Contains(component)&&
+                    _closeParentheses.Contains(component))
                 {
                     return false;
                 }
